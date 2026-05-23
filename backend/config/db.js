@@ -10,7 +10,11 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
-  charset: 'utf8mb4'
+  charset: 'utf8mb4',
+  ssl: process.env.DB_HOST && process.env.DB_HOST.includes('tidbcloud') ? {
+    minVersion: 'TLSv1.2',
+    rejectUnauthorized: true
+  } : undefined
 });
 
 const promisePool = pool.promise();
